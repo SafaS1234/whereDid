@@ -6,7 +6,7 @@ using namespace std;
 
 //function for finding the placement of the user input (letter or word)
 int placement_num(const string& str, const string& user_input, 
-                  bool case_sensitive = true)
+                  bool case_sensitive = true, size_t user_start = 0)
 {
     size_t place;
     string str_low, input_low;
@@ -55,21 +55,27 @@ int main()
     int char_place,
         substring_place;
     char yn;
+    size_t user_start;
 
     cout<< sentence;
     cout << "Enter a letter or word to find: \n";
     getline(cin, user_input);
 
-    cout << "Case-sensitive? Enter y or n";
+    cout << "Case-sensitive? Enter y or n: ";
     cin >> yn;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     bool case_sensitive = (yn == 'y' || yn == 'Y');
-    
 
+    cout << "Starting position: ";
+    cin >> user_start;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    
     if (user_input.size()==1)
     {
-        char_place = placement_num(sentence, user_input);
+        char_place = placement_num(sentence, user_input, case_sensitive, 
+                                   user_start);
 
         if (char_place != -1)
         {
@@ -84,7 +90,8 @@ int main()
 
     else
     {
-        substring_place = placement_num(sentence, user_input);
+        substring_place = placement_num(sentence, user_input, 
+                                        case_sensitive, user_start);
 
         if (substring_place != -1)
         {
