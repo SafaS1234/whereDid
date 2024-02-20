@@ -13,12 +13,12 @@ int placement_num(const string& str, const string& user_input,
 
     if (case_sensitive)
     {
-        place = str.find(user_input); 
+        place = str.find(user_input, user_start); 
     }
 
     else
     {
-        str_low = str;
+        str_low = str.substr(user_start);
         input_low = user_input;
 
         for (char& c : str_low)
@@ -32,6 +32,11 @@ int placement_num(const string& str, const string& user_input,
         }
 
         place = str_low.find(input_low);
+
+        if (place != string::npos)
+        {
+            place += user_start;
+        }
     }
 
 
@@ -57,8 +62,8 @@ int main()
     char yn;
     size_t user_start;
 
-    cout<< sentence;
-    cout << "Enter a letter or word to find: \n";
+    cout<< "Sentence: " <<  sentence;
+    cout << "\n\nEnter a letter or word to find: \n";
     getline(cin, user_input);
 
     cout << "Case-sensitive? Enter y or n: ";
@@ -67,7 +72,7 @@ int main()
 
     bool case_sensitive = (yn == 'y' || yn == 'Y');
 
-    cout << "Starting position: ";
+    cout << "Starting position (default = 0): ";
     cin >> user_start;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
@@ -103,4 +108,6 @@ int main()
             cout << "-1" << endl;
         }
     }
+
+    return 0;
 }
